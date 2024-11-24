@@ -2,7 +2,7 @@
   description = "Control and visualize Rigol® DS6000 or DS1000Z series oscilloscopes";
 
   inputs = rec {
-    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-24.11";
     flake-utils.url = "github:numtide/flake-utils";
 
     dsremote-src.url = "gitlab:Teuniz/DSRemote";
@@ -19,13 +19,16 @@
 
           dsremote = pkgs.stdenv.mkDerivation rec {
             pname = "dsremote";
-            version = "0.0";
+            version = "0.42_2408061715";
 
             src = dsremote-src;
 
             postPatch = ''
                 sed -i "s#/usr/#$out/#" dsremote.pro
                 sed -i "s#/etc/#$out/etc/#" dsremote.pro
+
+                # FIXME: No idea where _FORTIFY_SOURCE comes from
+                sed -i "s/#error \"configuration error\"//" global.h
             '';
 
             nativeBuildInputs = [
@@ -36,6 +39,7 @@
             buildInputs = [
               pkgs.qt5.qtbase
               pkgs.qt5.qttools
+              # pkgs.fortify-headers
             ];
 
             meta = with pkgs.lib; {
