@@ -2,7 +2,7 @@
   description = "Control and visualize Rigol® DS6000 or DS1000Z series oscilloscopes";
 
   inputs = rec {
-    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
     dsremote-src.url = "gitlab:Teuniz/DSRemote";
